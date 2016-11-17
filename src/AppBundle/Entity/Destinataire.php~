@@ -66,4 +66,27 @@ class Destinataire
     {
         return $this->mailDestinataire;
     }
+
+    /**
+     * Set carte
+     *
+     * @param \AppBundle\Entity\Cartes $carte
+     * @return Destinataire
+     */
+    public function setCarte(\AppBundle\Entity\Cartes $carte = null)
+    {
+        $this->carte = $carte;
+
+        return $this;
+    }
+
+    /**
+     * Get carte
+     *
+     * @return \AppBundle\Entity\Cartes 
+     */
+    public function getCarte()
+    {
+        return $this->carte;
+    }
 }

@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+
+
 {% block body %}
     <style>
 
@@ -23,6 +25,9 @@
         }
     </style>
 
+
+
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -34,38 +39,44 @@
                 </div>
 
 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin:30px auto;">
-                    Partager
-                </button>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
 
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="modal-body">
-                                {{ app.request.uri }}
+                    {% if app.user.id == carte.user.id %}
 
-                                {{ form_start(form, {'attr': {'style':'margin-top:30px;'}}) }}
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin:30px auto;">
+                            Partager
+                        </button>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ app.request.uri }}
 
-                                <div class="form-group">
-                                    {{ form_label(form.mailDestinataire) }}
-                                    {{ form_widget(form.mailDestinataire, {'attr': {'class':'form-control'}}) }}
-                                    {{ form_errors(form.mailDestinataire) }}
+                                        {{ form_start(form, {'attr': {'style':'margin-top:30px;'}}) }}
+
+                                        <div class="form-group">
+                                            {{ form_label(form.mailDestinataire) }}
+                                            {{ form_widget(form.mailDestinataire, {'attr': {'class':'form-control'}}) }}
+                                            {{ form_errors(form.mailDestinataire) }}
+                                        </div>
+
+                                        <input type="submit" value="Envoyer" class="btn btn-success"/>
+                                        
+                                        {{ form_end(form) }}
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    </div>
                                 </div>
-
-                                <input type="submit" value="Envoyer" class="btn btn-success"/>
-
-                                {{ form_end(form) }}
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    {% endif %}   
+                {% endif %}    
+
 
             </div>
         </div>
@@ -73,3 +84,15 @@
 
 
 {% endblock %}
+
+        {% block mainJavascripts %}
+     {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
+
+               <script>
+                   $(document).ready(function () {
+                     $('.navbar').addClass('hidden');
+                     });
+    </script>
+
+                {% endif %}    
+    {% endblock %}

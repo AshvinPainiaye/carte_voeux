@@ -11,8 +11,7 @@ use AppBundle\Form\ImagesType;
 use AppBundle\Entity\Cartes;
 use AppBundle\Form\CartesType;
 
-class ImagesController extends Controller
-{
+class ImagesController extends Controller {
 
     /**
      * Lists all Images entities.
@@ -20,8 +19,7 @@ class ImagesController extends Controller
      * @Route("/", name="images_index")
      * @Method("GET")
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $images = $em->getRepository('AppBundle:Images')->findAll();
@@ -37,8 +35,7 @@ class ImagesController extends Controller
      * @Route("/new", name="images_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request) {
         $image = new Images();
         $form = $this->createForm('AppBundle\Form\ImagesType', $image);
         $form->handleRequest($request);
@@ -60,15 +57,18 @@ class ImagesController extends Controller
     /**
      * Finds and displays a Images entity.
      *
-     * @Route("/{id}", name="images_show")
+     * @Route("/new/carte/{id}", name="images_show")
      * @Method({"GET", "POST"})
      */
-    public function showAction(Request $request, Images $image)
-    {
+    public function showAction(Request $request, Images $image) {
 
         $carte = new Cartes();
         $form = $this->createForm('AppBundle\Form\CartesType', $carte);
         $form->handleRequest($request);
+
+        $userId = $this->getUser();
+        $userId->getId();
+        $carte->setUser($userId);
 
         if ($form->isSubmitted() && $form->isValid()) {
 

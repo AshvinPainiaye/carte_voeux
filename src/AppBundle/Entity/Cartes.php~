@@ -44,6 +44,14 @@ class Cartes
      */
     private $destinataire;
     
+    
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="User", inversedBy="carte")
+    * @ORM\JoinColumn(name="users_id", referencedColumnName="id")
+    */
+    private $user;
+    
     /**
      * Get id
      *
@@ -103,4 +111,44 @@ class Cartes
     }
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->destinataire = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add destinataire
+     *
+     * @param \AppBundle\Entity\Destinataire $destinataire
+     * @return Cartes
+     */
+    public function addDestinataire(\AppBundle\Entity\Destinataire $destinataire)
+    {
+        $this->destinataire[] = $destinataire;
+
+        return $this;
+    }
+
+    /**
+     * Remove destinataire
+     *
+     * @param \AppBundle\Entity\Destinataire $destinataire
+     */
+    public function removeDestinataire(\AppBundle\Entity\Destinataire $destinataire)
+    {
+        $this->destinataire->removeElement($destinataire);
+    }
+
+    /**
+     * Get destinataire
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDestinataire()
+    {
+        return $this->destinataire;
+    }
 }

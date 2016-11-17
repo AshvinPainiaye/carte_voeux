@@ -10,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="cartes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CartesRepository")
  */
-class Cartes
-{
+class Cartes {
 
     /**
      * @var int
@@ -22,7 +21,6 @@ class Cartes
      */
     private $id;
 
-    
     /**
      * @var text
      *
@@ -30,39 +28,40 @@ class Cartes
      */
     private $message;
 
-
     /**
      * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Images", inversedBy="cartes", cascade={"persist", "remove"})
      */
     private $images;
 
-    
-         /**
+    /**
      * @var
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Destinataire", mappedBy="carte" , cascade={"persist", "remove"})
      */
     private $destinataire;
-    
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="carte")
+     * @ORM\JoinColumn(name="users_id", referencedColumnName="id")
+     */
+    private $user;
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
- 
     /**
      * Set message
      *
      * @param string $message
      * @return Cartes
      */
-    public function setMessage($message)
-    {
+    public function setMessage($message) {
         $this->message = $message;
 
         return $this;
@@ -73,11 +72,9 @@ class Cartes
      *
      * @return string 
      */
-    public function getMessage()
-    {
+    public function getMessage() {
         return $this->message;
     }
-
 
     /**
      * Set images
@@ -85,8 +82,7 @@ class Cartes
      * @param \AppBundle\Entity\Images $images
      * @return Cartes
      */
-    public function setImages(\AppBundle\Entity\Images $images = null)
-    {
+    public function setImages(\AppBundle\Entity\Images $images = null) {
         $this->images = $images;
 
         return $this;
@@ -97,17 +93,14 @@ class Cartes
      *
      * @return \AppBundle\Entity\Images 
      */
-    public function getImages()
-    {
+    public function getImages() {
         return $this->images;
     }
-
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->destinataire = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -117,8 +110,7 @@ class Cartes
      * @param \AppBundle\Entity\Destinataire $destinataire
      * @return Cartes
      */
-    public function addDestinataire(\AppBundle\Entity\Destinataire $destinataire)
-    {
+    public function addDestinataire(\AppBundle\Entity\Destinataire $destinataire) {
         $this->destinataire[] = $destinataire;
 
         return $this;
@@ -129,8 +121,7 @@ class Cartes
      *
      * @param \AppBundle\Entity\Destinataire $destinataire
      */
-    public function removeDestinataire(\AppBundle\Entity\Destinataire $destinataire)
-    {
+    public function removeDestinataire(\AppBundle\Entity\Destinataire $destinataire) {
         $this->destinataire->removeElement($destinataire);
     }
 
@@ -139,8 +130,29 @@ class Cartes
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDestinataire()
-    {
+    public function getDestinataire() {
         return $this->destinataire;
     }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     * @return Cartes
+     */
+    public function setUser(\AppBundle\Entity\User $user = null) {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
 }
