@@ -98,7 +98,7 @@ class CartesController extends Controller
         //   $deleteForm = $this->createDeleteForm($carte);
         return $this->render('cartes/show.html.twig', array(
                     'carte' => $carte,
-                    //             'delete_form' => $deleteForm->createView(),
+                    // 'delete_form' => $deleteForm->createView(),
                     'form' => $form->createView(),
         ));
     }
